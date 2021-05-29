@@ -52,5 +52,6 @@ public class Stock implements Serializable {
 	public String toString() {
 		return "Stock [stockId=" + stockId + ", stockName=" + stockName + ", price=" + price + "]";
 	}
-
+	
+	
 }
