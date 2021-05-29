@@ -1,8 +1,9 @@
 package com.investment.stock.repository;
 
-import org.springframework.stereotype.Repository;
+import com.investment.stock.entities.Stock;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-@Repository
-public class StockRepository {
-
+public interface StockRepository extends JpaRepository<Stock, Long> {		 
+	List<Stock> findByInvestmentAccountId(int id);
 }
