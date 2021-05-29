@@ -22,7 +22,7 @@ public class PortfolioService {
 		 for(OrderStock orderStock:orderStocks) {
 			 Portfolio portfolio=new Portfolio();
 			 portfolio.setPrice(orderStock.getPrice());
-			 portfolio.setQuantity(orderStock.getQuantity());
+			 portfolio.setQuantity(orderStock.getQunatity());
 			 getPortfolioValue(orderStock);
 			 portfolio.setValue(getPortfolioValue(orderStock));
 			 
@@ -32,7 +32,7 @@ public class PortfolioService {
 	}
 
 	private double getPortfolioValue(OrderStock orderStock) {
-		return orderStock.getPrice() * orderStock.getQuantity();
+		return orderStock.getPrice() * orderStock.getQunatity();
 	}
 	
 }
