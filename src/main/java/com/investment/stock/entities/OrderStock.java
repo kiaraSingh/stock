@@ -21,14 +21,16 @@ public class OrderStock implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "id")
 	private int id;
-	private int qunatity;
+	@Column(name = "quantity")
+	private int quantity;
+	@Column(name = "price")
 	private double price;
+	@Column(name = "order_stock_date")
 	private LocalDate date;
-
-	@OneToMany(mappedBy = "investment_account")
-	private InvestmentAccounts investmentAccounts;
-	@OneToMany(mappedBy = "stock")
-	private Stock stock;
+	@Column(name = "investment_account_id")
+	private int investmentAccountsId;
+	@Column(name = "stock_id")
+	private int stock_id;
 
 	public int getId() {
 		return id;
@@ -39,11 +41,11 @@ public class OrderStock implements Serializable {
 	}
 
 	public int getQunatity() {
-		return qunatity;
+		return quantity;
 	}
 
-	public void setQunatity(int qunatity) {
-		this.qunatity = qunatity;
+	public void setQunatity(int quantity) {
+		this.quantity = quantity;
 	}
 
 	public double getPrice() {
@@ -62,30 +64,28 @@ public class OrderStock implements Serializable {
 		this.date = date;
 	}
 
-	public InvestmentAccounts getInvestmentAccounts() {
-		return investmentAccounts;
+	public int getInvestmentAccountsId() {
+		return investmentAccountsId;
 	}
 
-	public void setInvestmentAccounts(InvestmentAccounts investmentAccounts) {
-		this.investmentAccounts = investmentAccounts;
+	public void setInvestmentAccountsId(int investmentAccountsId) {
+		this.investmentAccountsId = investmentAccountsId;
 	}
 
-	public Stock getStock() {
-		return stock;
+	public int getStock_id() {
+		return stock_id;
 	}
 
-	public void setStock(Stock stock) {
-		this.stock = stock;
-	}
-
-	public static long getSerialversionuid() {
-		return serialVersionUID;
+	public void setStock_id(int stock_id) {
+		this.stock_id = stock_id;
 	}
 
 	@Override
 	public String toString() {
-		return "OrderStock [id=" + id + ", qunatity=" + qunatity + ", price=" + price + ", date=" + date
-				+ ", investmentAccounts=" + investmentAccounts + ", stock=" + stock + "]";
+		return "OrderStock [id=" + id + ", quantity=" + quantity + ", price=" + price + ", date=" + date
+				+ ", investmentAccountsId=" + investmentAccountsId + ", stock_id=" + stock_id + "]";
 	}
+
+	
 
 }

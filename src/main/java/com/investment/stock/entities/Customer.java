@@ -19,6 +19,7 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "customer_id")
 	private int customerId;
+	@Column(name = "password")
 	private String password;
 
 	public int getCustomerId() {

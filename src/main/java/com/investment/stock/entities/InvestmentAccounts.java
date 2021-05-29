@@ -13,18 +13,19 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="investment_account")
+@Table(name="investment_accounts")
 public class InvestmentAccounts implements Serializable {
 
 	private static final long serialVersionUID = 6732044685642900038L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "investmentaccount_id")
+	@Column(name = "investment_account_id")
 	private int investmentAccountId;
+	@Column(name = "balance")
 	private double balance;
-	@OneToMany(mappedBy = "customer")
-	private Customer customer;
+	@Column(name = "customer_id")
+	private int customerId;
 
 	public int getInvestmentAccountId() {
 		return investmentAccountId;
@@ -42,18 +43,18 @@ public class InvestmentAccounts implements Serializable {
 		this.balance = balance;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public int getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustomer(Customer customer) {
-		this.customer = customer;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 
 	@Override
 	public String toString() {
-		return "InvestmentAccounts [investmentAccountId=" + investmentAccountId + ", balance=" + balance + ", customer="
-				+ customer + "]";
+		return "InvestmentAccounts [investmentAccountId=" + investmentAccountId + ", balance=" + balance
+				+ ", customerId=" + customerId + "]";
 	}
 	
 	
