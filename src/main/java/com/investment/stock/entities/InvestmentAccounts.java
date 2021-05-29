@@ -1,41 +1,61 @@
 package com.investment.stock.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
-public class InvestmentAccounts {
+@Table(name="investment_account")
+public class InvestmentAccounts implements Serializable {
+
+	private static final long serialVersionUID = 6732044685642900038L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "investmentaccountid")
+	@Column(name = "investmentaccount_id")
 	private int investmentAccountId;
 	private double balance;
-	@OneToMany(mappedBy = "customerid")
+	@OneToMany(mappedBy = "customer")
 	private Customer customer;
-	
+
 	public int getInvestmentAccountId() {
 		return investmentAccountId;
 	}
+
 	public void setInvestmentAccountId(int investmentAccountId) {
 		this.investmentAccountId = investmentAccountId;
 	}
+
 	public double getBalance() {
 		return balance;
 	}
+
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
+
 	public Customer getCustomer() {
 		return customer;
 	}
+
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+
+	@Override
+	public String toString() {
+		return "InvestmentAccounts [investmentAccountId=" + investmentAccountId + ", balance=" + balance + ", customer="
+				+ customer + "]";
+	}
 	
 	
-	
+
 }
