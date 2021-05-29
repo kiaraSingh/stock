@@ -1,8 +1,9 @@
 package com.investment.stock.service;
 
-import org.springframework.stereotype.Service;
+import java.util.List;
 
-@Service
+import com.investment.stock.entities.Stock;
+
 public interface StockService {
-
+	public List<Stock> findByInvestmentAccountId(int investmentAccountId);
 }
