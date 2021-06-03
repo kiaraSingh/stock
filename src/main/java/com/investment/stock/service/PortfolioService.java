@@ -1,38 +1,45 @@
 package com.investment.stock.service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.investment.stock.entities.OrderStock;
-import com.investment.stock.repository.PortfoliorRepository;
+import com.investment.stock.repository.OrderStockRepository;
 import com.investment.stock.response.pojo.Portfolio;
 
 @Service
 public class PortfolioService {
 
-	@Autowired
-	PortfoliorRepository portfoliorRepository;
 	
-	public List<Portfolio> getPortfolios(String id){
-		 List<OrderStock> orderStocks = portfoliorRepository.findStocksByInvestmentAccountId(Integer.valueOf(id));
-		 List<Portfolio> portfolios=new ArrayList<>();
-		 for(OrderStock orderStock:orderStocks) {
-			 Portfolio portfolio=new Portfolio();
-			 portfolio.setPrice(orderStock.getPrice());
-			 portfolio.setQuantity(orderStock.getQunatity());
-			 getPortfolioValue(orderStock);
-			 portfolio.setValue(getPortfolioValue(orderStock));
-			 
-			 portfolios.add(portfolio);
-		 }
-		 return portfolios;
+	OrderStockRepository orderStockRepository;
+
+	@Autowired
+	public PortfolioService(OrderStockRepository orderStockRepository) {
+		this.orderStockRepository=orderStockRepository;
+ 	}
+
+	public List<Portfolio> getPortfolios(String id) {
+
+		List<OrderStock> orderStocks = orderStockRepository.findOrderStocksByInvestmentAccountId(Integer.valueOf(id));
+		
+		return orderStocks.stream().map(orderStock -> createPortfolio(orderStock)).collect(Collectors.toList());
+	}
+
+	private Portfolio createPortfolio(OrderStock orderStock) {
+		Portfolio portfolio = new Portfolio();
+		portfolio.setName(orderStock.getStock().getStockName());
+		portfolio.setPrice(orderStock.getPrice());
+		portfolio.setQuantity(orderStock.getQunatity());
+		getPortfolioValue(orderStock);
+		portfolio.setValue(getPortfolioValue(orderStock));
+		return portfolio;
 	}
 
 	private double getPortfolioValue(OrderStock orderStock) {
-		return orderStock.getPrice() * orderStock.getQunatity();
+		return  orderStock.getPrice() * orderStock.getQunatity();
 	}
-	
+
 }
