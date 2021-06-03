@@ -5,38 +5,51 @@ import java.time.LocalDate;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 @Entity
 @Table(name = "order_stock")
+@JsonIgnoreProperties(ignoreUnknown = true)
+@JsonInclude(Include.NON_NULL)
 public class OrderStock implements Serializable {
 
 	private static final long serialVersionUID = -1861054024458393687L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	private int id;
+	private Integer id;
 	@Column(name = "quantity")
 	private int quantity;
 	@Column(name = "price")
 	private double price;
-	@Column(name = "order_stock_date")
+	@Column(name = "order_stock_date") 
+    @JsonFormat(pattern="yyyy-MM-dd")
 	private LocalDate date;
-	@Column(name = "investment_account_id")
-	private int investmentAccountsId;
-	@Column(name = "stock_id")
-	private int stock_id;
 
-	public int getId() {
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "investment_account_id", nullable = false)
+	private InvestmentAccounts investmentAccount;
+	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@JoinColumn(name = "stock_id", nullable = false)
+	private Stock stock;
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -64,28 +77,28 @@ public class OrderStock implements Serializable {
 		this.date = date;
 	}
 
-	public int getInvestmentAccountsId() {
-		return investmentAccountsId;
+	public int getQuantity() {
+		return quantity;
 	}
 
-	public void setInvestmentAccountsId(int investmentAccountsId) {
-		this.investmentAccountsId = investmentAccountsId;
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
 	}
 
-	public int getStock_id() {
-		return stock_id;
+	public InvestmentAccounts getInvestmentAccount() {
+		return investmentAccount;
 	}
 
-	public void setStock_id(int stock_id) {
-		this.stock_id = stock_id;
+	public void setInvestmentAccount(InvestmentAccounts investmentAccount) {
+		this.investmentAccount = investmentAccount;
 	}
 
-	@Override
-	public String toString() {
-		return "OrderStock [id=" + id + ", quantity=" + quantity + ", price=" + price + ", date=" + date
-				+ ", investmentAccountsId=" + investmentAccountsId + ", stock_id=" + stock_id + "]";
+	public Stock getStock() {
+		return stock;
 	}
 
-	
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
 
 }
